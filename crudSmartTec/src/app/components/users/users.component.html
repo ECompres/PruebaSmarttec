@@ -1,0 +1,55 @@
+<style>
+    .hola {
+        border-left: rgba(0, 0, 0, 0.3) solid 1px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .namee {
+        padding-right: 10px;
+    }
+</style>
+<table mat-table [dataSource]="users" class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+                  The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td class="namee" mat-cell *matCellDef="let element">
+            <p>
+                {{element.name}}
+            </p>
+
+        </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> Email </th>
+        <td class="hola" mat-cell *matCellDef="let element"> {{element.email}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef> Phone Number </th>
+        <td class="hola" mat-cell *matCellDef="let element"> {{element.phone}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef> Username </th>
+        <td class="hola" mat-cell *matCellDef="let element">
+            {{element.username}}
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="website">
+        <th mat-header-cell *matHeaderCellDef> WebSite </th>
+        <td class="hola" mat-cell *matCellDef="let element"> {{element.website}} </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="encabezado"></tr>
+    <tr mat-row *matRowDef="let row; columns: encabezado;"></tr>
+</table>

@@ -1,30 +1,42 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
 import { ContactService } from 'src/app/services/contact.service';
-import { Contact } from 'src/app/models/contact';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-contacts',
   templateUrl: './contacts.component.html',
-  styleUrls: ['./contacts.component.css']
-})
 
+})
 export class ContactsComponent implements OnInit {
-  public contacts: Contact[];
+
+  public contacts;
+
+  encabezado = ['name', 'email', 'phone', 'actions'];
+
   constructor(
-    private _contactService: ContactService
+    private _contactService: ContactService,
+    private _router: Router
   ) { }
 
-  ngOnInit() {
-    this._contactService.getContacts().subscribe(
-      (res) => {
-        this.contacts = res;
-        console.log(this.contacts)
-      },
-      (err) => {
-        console.log(err);
+  deleteContact(id) {
+    for (let i = 0; i < this.contacts.length; i++) {
+      if (this.contacts[i].id == id) {
+        this.contacts.splice(i, 1);
       }
-    );
+    }
+    this._contactService.deleteContact(id);
+    this._router.navigateByUrl('/create', { skipLocationChange: true }).then(() => {
+      this._router.navigate(['/contacts'])
+    })
+
+  }
+  editContact(id) {
+    this._router.navigate(['/update/', id])
+  }
+  ngOnInit() {
+    this.contacts = this._contactService.getContacts();
   }
 
 }
+

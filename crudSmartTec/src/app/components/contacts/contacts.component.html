@@ -1,13 +1,47 @@
-<table>
-    <tr>
-        <td>Name</td>
-        <td>Email</td>
-        <td>Phone Number</td>
-        <td>Actions</td>
-    </tr>
-    <tr *ngFor="let x of contacts">
-        <td>{{x.name}}</td>
-        <td>{{x.email}}</td>
-        <td>{{x.phone}}</td>
-    </tr>
+<style>
+    .hola {
+        border-left: rgba(0, 0, 0, 0.3) solid 1px;
+        padding-left:10px;
+        padding-right:10px;
+    }
+    .namee{padding-right: 10px;}
+</style>
+<table mat-table [dataSource]="contacts" class="mat-elevation-z8">
+
+    <h3>List Contacts</h3>
+
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td class="namee"mat-cell *matCellDef="let element">
+            <p>
+                {{element.name}}
+            </p>
+
+        </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> Email </th>
+        <td class="hola" mat-cell *matCellDef="let element"> {{element.email}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef> Phone Number </th>
+        <td mat-cell class="hola" *matCellDef="let element"> {{element.phoneNumber}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td  mat-cell *matCellDef="let element">
+            <button mat-raised-button color="primary" style="margin-right:5px;"
+                [routerLink]="['/update', element.id]">Edit</button>
+            <button mat-raised-button color="warn" (click)="deleteContact(element.id)">Delete</button>
+        </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="encabezado"></tr>
+    <tr mat-row *matRowDef="let row; columns: encabezado;"></tr>
 </table>

@@ -1,1 +1,20 @@
-<p>update works!</p>
+<div class="example-container">
+    <h3>Update Contact</h3>
+    <form #updateContactForm="ngForm" (ngSubmit)="onSubmit(updateContactForm)" action="">
+        <mat-form-field>
+            <input matInput name="Name" #name="ngModel" [(ngModel)]="contact.name" id="" required placeholder="Name">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <input matInput name="Email" #email="ngModel" [(ngModel)]="contact.email" id="" required
+                placeholder="email@domain.com">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <input matInput name="Phone" #phone="ngModel" [(ngModel)]="contact.phoneNumber" id="" required
+                placeholder="8091234567">
+        </mat-form-field>
+        <br>
+        <button type="submit" mat-raised-button color="primary" [disabled]="!updateContactForm.form.valid">Add</button>
+    </form>
+</div>

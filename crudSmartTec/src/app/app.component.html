@@ -1,4 +1,23 @@
+<mat-drawer-container class="new">
+  <mat-drawer #drawer class="example-sidenav" mode="side">
+    <p>Menu Sidebar</p>
+    <p><button type="button" mat-raised-button color="primary" [routerLink]="['/users']"
+        routerLinkActive="router-link-active"> List JSONPlaceHolder users</button></p>
+    <p><button type="button" mat-raised-button color="primary" [routerLink]="['/create']"
+        routerLinkActive="router-link-active"> Create contact</button></p>
+    <p><button type="button" mat-raised-button color="primary" [routerLink]="['/contacts']"
+        routerLinkActive="router-link-active"> List Contacts</button></p>
 
-  <router-outlet>
+  </mat-drawer>
 
-  </router-outlet>
+  <div class="example-sidenav-content">
+    <button type="button" mat-raised-button color="primary" (click)="drawer.toggle()">
+      Menu
+    </button>
+  </div>
+  <div class="container">
+    <router-outlet></router-outlet>
+
+  </div>
+
+</mat-drawer-container>

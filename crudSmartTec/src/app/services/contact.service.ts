@@ -1,41 +1,70 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Contact } from '../models/contact';
-import { Observable } from 'rxjs';
+export class initializeContacts {
+    tempContacts() {
+        if (localStorage.getItem('contacts') === null || localStorage.getItem('contacts') == undefined) {
+            let contactsArr = [
+                {
+                    id: 1,
+                    name: 'Elías Comprés',
+                    email: 'ecompres2017@gmail.com',
+                    phoneNumber: "8298677416"
+                },
+                {
+                    id: 2,
+                    name: 'Elías Aquino',
+                    email: 'ecompres2018@gmail.com',
+                    phoneNumber: "8298677417"
+                },
+            ]
 
+            localStorage.setItem('contacts', JSON.stringify(contactsArr));
+
+        }
+    }
+}
 
 @Injectable()
-export class ContactService {
+export class ContactService extends initializeContacts {
 
-    public url: string;
-    public headers: HttpHeaders;
+    public contactsArr = JSON.parse(localStorage.getItem('contacts'));
 
-    constructor(private _http: HttpClient) {
 
-        this.url = "https://jsonplaceholder.typicode.com/users/";
-        this.headers = new HttpHeaders().set("Content-Type", "application/json");
+    constructor() {
+
+        super();
+        this.tempContacts();
 
     }
-    
-    getContacts(): Observable<any> {
-        return this._http.get(this.url, { headers: this.headers });
-    };
-    
-    getContact(id): Observable<any> {
-        return this._http.get(this.url + id, { headers: this.headers });
-    };
-    
-    saveContact(contact: Contact): Observable<any> {
-        let params = JSON.stringify(contact)
-        return this._http.post(this.url, params, { headers: this.headers });
-    };
-    
-    updateContact(contact: Contact): Observable<any> {
-        let params = JSON.stringify(contact)
-        return this._http.put(this.url + contact.id, params, { headers: this.headers });
+
+    getContacts() {
+
+        return this.contactsArr;
     }
 
-    deleteContact(id): Observable<any> {
-        return this._http.delete(this.url + id, { headers: this.headers })
-    };
+    addContact(contact) {
+        this.contactsArr.push(contact);
+        localStorage.setItem('contacts', JSON.stringify(this.contactsArr));
+    }
+
+    deleteContact(id) {
+
+        for (let i = 0; i < this.contactsArr.lenght; i++) {
+            if (this.contactsArr[i].id == id) {
+                this.contactsArr.splice(i, 1);
+            }
+        }
+        localStorage.setItem('contacts', JSON.stringify(this.contactsArr));
+
+    }
+    updateContact(c1, c2) {
+
+        for (let i = 0; i < this.contactsArr.lenght; i++) {
+            if (this.contactsArr[i].id == c1.id) {
+                this.contactsArr[i].id = c2;
+            }
+        }
+
+        localStorage.setItem('contacts', JSON.stringify(this.contactsArr));
+
+    }
 }
